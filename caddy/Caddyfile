@@ -1,0 +1,12 @@
+{
+    debug
+}
+fe.dev.localhost {
+    reverse_proxy host.docker.internal:5173
+}
+be.dev.localhost {
+    root * /var/www/html/api
+    encode gzip
+    php_fastcgi php:9000 
+    file_server
+}

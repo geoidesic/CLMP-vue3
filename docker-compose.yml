@@ -1,0 +1,49 @@
+version: "3.9"
+networks:
+  web-network:
+services:
+  caddy:
+    image: caddy:latest
+    restart: always
+    volumes:
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/logs:/logs
+      - ./app:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - web-network
+    # this bit allows caddy on docker to see the listener on the external (to docker) port 8080 (which listens locally on my laptop)
+    extra_hosts:
+      host.docker.internal: host-gateway
+  php:
+    build: ./php
+    tty: true
+    restart: always
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - web-network
+    extra_hosts:
+      host.docker.internal: host-gateway
+
+  mysql:
+    image: mysql/mysql-server:latest-aarch64
+    ports:
+      - "23306:3306"
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_db
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    volumes:
+      - $PWD/db/data:/var/lib/mysql
+    networks:
+      - web-network
+    extra_hosts:
+      host.docker.internal: host-gateway
