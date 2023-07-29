@@ -1,4 +1,4 @@
-# CLMP-localhost
+# CLMP-vue3
 
 A dockerised https localhost dev environment stack for PHP/MySQL, ideal for SPA development.
 It is additionally configured to allow connecting to and between a locally running service on port 5173 (which could e.g. be a VueJS front-end SPA).
