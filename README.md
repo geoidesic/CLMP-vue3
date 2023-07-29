@@ -32,6 +32,7 @@ Note that the two domains (front-end and back-end) must be fully qualified; i.e.
 
 In order to see this in action, you need the following:
 
+1. Note that you may need to update the composer hash. Copy it from here: https://getcomposer.org/download/ and replace the value currently in the Dockerfile if it's different, otherwise the `docker-compose up` will fail.
 1. Create an (e.g.) index.php file (or checkout a working PHP api) into the folder defined in the Caddyfile `root` directive for the back-end listener.
 1. Add the FQDN's to your /etc/hosts file, pointed at 127.0.0.1, then flush your DNS cache.
 1. Launch the containers with the `docker-compose up` CLI command, run from the root of this project (i.e. the folder this README file is in).
